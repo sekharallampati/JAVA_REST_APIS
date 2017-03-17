@@ -1,1 +1,70 @@
 
+import java.io.IOException;
+
+import java.net.URI;
+
+import java.net.URISyntaxException;
+
+import org.apache.http.HttpEntity;
+
+import org.apache.http.client.methods.CloseableHttpResponse;
+
+import org.apache.http.client.methods.HttpGet;
+
+import org.apache.http.client.utils.URIBuilder;
+
+import org.apache.http.impl.client.CloseableHttpClient;
+
+import org.apache.http.impl.client.HttpClients;
+
+import org.apache.http.util.EntityUtils;
+
+public class Test2 {
+
+    public static void main(String[] args) throws IOException, URISyntaxException {
+    	System.out.println("test");
+
+    URI uri = new URIBuilder()
+
+        .setScheme("https")
+
+        .setHost("api.careeronestop.org")
+
+        .setPath("/v1/jobsearch/Sbkn4F5Z3JKiw15/veterans/61299/25/jobtitle/DESC/200/10/50")
+
+                .setParameter("companyName", "WIS International")
+
+        .build();
+
+    CloseableHttpResponse response = null;
+
+    HttpGet httpGet = null;
+    
+
+    try {
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+        httpGet = new HttpGet(uri);
+
+        httpGet.setHeader("Content-Type","application/json");
+
+        httpGet.setHeader("Authorization", "Bearer rp4MfjUOTwJIBeLiXbN6338eCd/1+c7sV5S8YyMyxBTXYX8tVtHrofBGIHB6hBM0Weif8naScPMm8B0zInaCVA==");
+
+        response = httpClient.execute(httpGet);
+
+        HttpEntity entity = response.getEntity();
+
+        System.out.println(EntityUtils.toString(entity));
+
+    } finally {
+
+        if(httpGet != null) httpGet.releaseConnection();
+
+        if(response != null) response.close();
+
+    }
+
+   }
+
+}
